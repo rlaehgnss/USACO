@@ -1,0 +1,30 @@
+#include <bits/stdc++.h>
+using namespace std;
+int n, m, chk[1005][1005] = {{0}}, ans = 0;
+int xx[4] = {0, 0, 1, -1}, yy[4] = {1, -1, 0, 0};
+char a[1005][1005];
+int main() {
+   scanf("%d %d", &n, &m);
+   for (int i = 1; i <= n; i++) {
+      for (int j = 1; j <= m; j++) scanf(" %c", &a[i][j]);
+   }
+   for(int i = 1; i <= n; i++) {
+      for (int j = 1; j <= m; j++) {
+         if(a[i][j] != 'G') continue;
+         for (int k = 0; k < 4; k++) {
+            int x = i+xx[k], y = j+yy[k];
+            if(x < 1 || y < 1 || x > n || y > m) continue;
+            if(a[x][y] == 'C') chk[i][j]++;
+         }
+         if(chk[i][j] > 1) ans++;
+      }
+   }
+   for (int i = 1; i <= n; i++) {
+      for (int j = 1; j <= m; j++) {
+         if(chk[i][j] == 2 && chk[i+1][j+1] == 2 && a[i][j+1] == 'C' && a[i+1][j] == 'C') ans--;
+         if(chk[i][j] == 2 && chk[i+1][j-1] ==2 && a[i][j-1] == 'C' && a[i+1][j] == 'C') ans--;
+      }
+   }
+   printf("%d", ans);
+   return 0;
+}
