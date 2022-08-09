@@ -1,0 +1,17 @@
+#include <bits/stdc++.h>
+using namespace std;
+int N, L, c[100005],x,cnt = 0,t,i,j;
+int main() {
+   cin >> N >> L;
+   for (i = 1; i <= N; i++) cin >> c[i];
+   sort(c,c+N+1);
+   for (i = N; i >= 1; i--) {
+      t = L;
+      for (j = N-i+1; j <= N; j++) {
+         if(c[j] < i) t -= i-c[j];
+         if(t < 0 || i-c[j] > 1) break;
+         cnt++;
+      }
+      if(cnt >= i) {cout << i; return 0;}
+   }
+}
