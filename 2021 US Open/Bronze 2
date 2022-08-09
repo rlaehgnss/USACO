@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+using namespace std;
+int n, k;
+char author[105][15];
+char ans[105][105];
+int main() {
+   scanf("%d %d", &n, &k);
+   for (int i = 1; i <= k; i++) scanf("%s", author[i]);
+   for (int i = 1; i <= k; i++) {
+      for (int j = 1; j <= k; j++) {
+         ans[i][j] = ' ';
+         if(i == j) ans[i][j] = 'B';
+      }
+   }
+   for (int i = 1; i <= n; i++) {
+      char a[105][15];
+      int aa[105];
+      for (int j = 1; j <= k; j++) {
+         scanf("%s", a[j]);
+         for (int p = 1; p <=k; p++) {
+            if(strcmp(author[p], a[j]) == 0) {aa[j] = p; break;}
+         }
+      }
+      queue<int> cnt;
+      for (int j = 1; j <= k; j++) {
+         if(cnt.empty() == true) cnt.push(aa[j]);
+         else if(strcmp(a[j-1], a[j]) <= 0) cnt.push(aa[j]);
+         else {
+            while(!cnt.empty()) {
+               int tmp1 = cnt.front();
+               for (int p = j; p <= k; p++) {
+                  ans[aa[p]][tmp1] = '1';
+                  ans[tmp1][aa[p]] = '0';
+               }
+               cnt.pop();
+            }
+            j--;
+         }
+      }
+   }
+   for (int i = 1; i <= k; i++) {
+      for (int j = 1; j <= k; j++) {
+         if(ans[i][j] == ' ') printf("?");
+         else printf("%c", ans[i][j]);
+      }
+      printf("\n");
+   }
+   return 0;
+}
